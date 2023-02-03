@@ -1,4 +1,3 @@
-import { render, screen } from '@testing-library/react';
 import { configure,shallow } from "enzyme";
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 configure({ adapter: new Adapter() });
@@ -18,6 +17,6 @@ const props=[{
 }
 
 ]
-it("renders without crashing", () => {
+it("render RouteTask without crashing", () => {
   shallow(<RouteTask details={props} />);
 });

@@ -15,7 +15,6 @@ function App() {
     const [tasks,setTasks]=useState([]);
     const [name,setName]=useState("");
     const [description,setDescription]=useState("");
-    console.log(getTasks().config);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,7 +29,6 @@ function App() {
 
      const HandleSubmit = async (e) => {
         e.preventDefault();
-        console.log(tasks,'tasks')
         const maxId= Math.max(...tasks.map(key => key.id));
         const taskData={
             id:maxId+1,
@@ -40,7 +38,6 @@ function App() {
             date: new Date().toLocaleString()
             
         };
-        console.log(taskData,'taskData');
         try {
             await addTask(taskData);
         } catch (error) {
@@ -68,12 +65,10 @@ function App() {
     };
     
      const HandleDelete = async (currentTask) => {
-        console.log(currentTask,'currentTask')
         try {
             const tasksData = tasks.filter(
                 (task) => task.name !== currentTask
             );
-            console.log(tasksData,'tasksData')
             setTasks(tasksData );
             await deleteTask(currentTask);
         } catch (error) {

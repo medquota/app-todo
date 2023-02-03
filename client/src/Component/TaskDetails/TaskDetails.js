@@ -4,9 +4,7 @@ import { useParams,Link } from 'react-router-dom'
 export default function TaskDetails(props) {
     const {details} =props;
     const {id} = useParams(); //get the URL parameters
-    console.log(props);
     const tasksData =details.data;
-    console.log(tasksData,'tasksData')
   let taskDetail;
     tasksData.map(key =>{
     if(key.id == id){

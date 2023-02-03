@@ -15,6 +15,6 @@ const props=
               }]
   }
 
-it("renders without crashing", () => {
+it("renders TaskDetails without crashing", () => {
   shallow(<TaskDetails details={props} />);
 });
