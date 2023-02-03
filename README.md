@@ -1,4 +1,20 @@
 
+# Getting Started 🚀
+These instructions will get you a copy of the project up and running on your local machine for development purposes.
+
+# Prerequisites 📄
+Installing 🔧
+Clone this repo using terminal git clone 
+https://github.com/medquota/app-todo
+# Server
+cd server
+npm install
+node app
+# Client
+cd client
+npm install
+npm start
+
 # Context
 Our fantastic product owner has a wonderful, amazing and revolutionary idea... he wants to build a new Todo application. 
 He has a good idea of the application behavior and comes with a backlog containing the following user stories :
