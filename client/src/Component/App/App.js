@@ -120,10 +120,10 @@ function App() {
                             key={task.id}
                             className="flex task_container"
                         >
-                            <Checkbox
+                                                        <Checkbox
                                 checked={task.completed}
                                 onClick={() => HandleUpdate(task)}
-                                color="primary"
+                                color="primary check-done"
                             />
                                             <Link to={"/"+task.id}>
                             <div
@@ -138,6 +138,7 @@ function App() {
                             <span className="task_desc">{task.description}</span>
                             </div>
                             </Link>
+
                             <Button
                                 onClick={() =>HandleDelete(task.name)}
                                 color="secondary"

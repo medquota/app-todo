@@ -46,7 +46,7 @@
     color: black !important;
     text-decoration: none !important;
 }
-.MuiButton-outlinedPrimary,.MuiButton-label{
+.MuiButton-label{
     color: white !important;
     background-color: black !important;
     font-weight: bold;
@@ -56,4 +56,33 @@
     border: 1px solid;
     color: red;
     background-color: red;
+}
+.check-done{
+    width: 20% !important;
+}
+.MuiSvgIcon-root{
+    font-size: 34px !important;
+}
+.task_ready a{
+    text-decoration: none;
+    color: black;
+}
+.btn-back{
+    border: 1px solid;
+    text-decoration: none;
+    color: white;
+    background-color: black;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 50%;
+}
+.MuiCheckbox-root{
+    margin-left: 50px !important;
+    margin-right: 50px !important;
+}
+.MuiButton-label{
+    padding: 15px;
+}
+.MuiButton-outlinedPrimary{
+    border: none !important;
 }
