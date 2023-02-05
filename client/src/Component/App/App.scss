@@ -1,0 +1,113 @@
+.App {
+    width: 100vw;
+    height: 100vh;
+    background: #f5f5f5;
+}
+.hide{
+    display: none;
+}
+.show{
+    display: block;
+}
+.container {
+    width: 500px;
+    min-height: 300px;
+    padding: 10px;
+}
+.line_through {
+    text-decoration: line-through;
+}
+.app-todo{
+    width: 60%;
+    height: auto;
+    padding: 100px;
+    margin: auto;
+    font-size: 25px;
+    background-color: #fff;
+    font-family: sans-serif;
+    text-align: center;
+    .heading {
+        font-size: 30px;
+        margin: 15px;
+        font-weight: bold;
+        text-align: center;
+    }
+    .form-todo{
+        .text-name{
+            width: 30%;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+        .text-desc{
+            display: block;
+            width: 30%;
+            margin: auto;
+            padding: 10px;
+            height: 100px;
+        }
+        .btn-add{
+            background-color: black;
+            color: white;
+            font-weight: bold;
+            padding: 10px;
+            width: 20%;
+            margin: 15px;
+        }
+    }
+}
+
+#task-info{
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    td, th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        a{
+            text-decoration: none;
+            color: #000;
+        }
+      }
+      tr:nth-child(even){background-color: #f2f2f2;}
+      tr:hover {background-color: #ddd;}
+      th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        background-color: #000;
+        color: white;
+      }
+  .task{
+    text-align: left;
+    .task_name{
+        font-size: 12px;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+    }
+    .task_desc{
+        font-size: 10px;
+    }
+  }
+  
+  .check-task{
+    width: 20px;
+    height: 20px;
+  }
+  .btn-delete{
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 10px;
+    border-radius: 11%;
+  }
+}
+
+.btn-back{
+    border: 1px solid;
+    text-decoration: none;
+    color: white;
+    background-color: black;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 50%;
+}

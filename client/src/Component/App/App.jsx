@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from "react";
-import { Paper, TextField } from "@material-ui/core";
-import { Checkbox, Button } from "@material-ui/core";
+//import { Paper, TextField } from "@material-ui/core";
+//import { Checkbox, Button } from "@material-ui/core";
 import {Link } from "react-router-dom";
 import RouteTask from '../RouteTask/RouteTask';
 import {
@@ -9,7 +9,7 @@ import {
     updateTask,
     deleteTask,
 } from "../services/taskServices"
-import "./App.css";
+import "./App.scss";
 
 function App() {
     const [tasks,setTasks]=useState([]);
@@ -29,6 +29,7 @@ function App() {
 
      const HandleSubmit = async (e) => {
         e.preventDefault();
+        e.target.reset();
         const maxId= Math.max(...tasks.map(key => key.id));
         const taskData={
             id:maxId+1,
@@ -78,54 +79,43 @@ function App() {
         const sortedData = [...tasks].sort((a, b) => b.id - a.id)
         const sortdata=sortedData.sort((a,b) => a.completed - b.completed);
         return (
-        <div className="App flex">
-            <RouteTask data={tasks}/>
-            <Paper elevation={3} className="container app-todo">
+        <div className="App">
+            <div className="container app-todo">
                 <div className="heading">TO-DO</div>
                 <form
                     onSubmit={HandleSubmit}
-                    className="flex"
-                    style={{ margin: "15px 0" }}
+                    className="form-todo"
                 >
-                    <TextField
-                        variant="outlined"
-                        size="small"
-                        style={{ width: "40%" }}
+                    <input
+                    className="text-name"
                         required={true}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Name"
                     />
-                    <TextField
-                        variant="outlined"
-                        size="small"
-                        style={{ width: "40%" }}
+                    <textarea
+                        className="text-desc"
                         required={false}
                         onChange={(e) => setDescription(e.target.value)}
                         placeholder="Description"
                     />
-                    <Button
-                        style={{ height: "40px" }}
-                        color="primary"
-                        variant="outlined"
+                    <button
+                       className="btn-add"
                         type="submit"
                     >
                         Add task
-                    </Button>
+                    </button>
                 </form>
-                <div className="task_ready">
+                <table id="task-info">
+                <tr>
+                    <th>Task</th>
+                    <th> ✔</th>
+                    <th>x</th>
+                </tr>
                     {sortdata.length
                     && sortdata.map((task) => (
-
-                        <Paper
-                            key={task.id}
-                            className="flex task_container"
-                        >
-                                                        <Checkbox
-                                checked={task.completed}
-                                onClick={() => HandleUpdate(task)}
-                                color="primary check-done"
-                            />
-                                            <Link to={"/"+task.id}>
+                        <tr key={task.id}className="task_container">
+                            <td>
+                                <Link to={"/"+task.id}>
                             <div
                                 className={
                                     task.completed
@@ -133,22 +123,34 @@ function App() {
                                         : "task"
                                 }
                             > 
-                            <span className="task_id">{task.id} - </span>
-                            <span className="task_name">{task.name}</span>
-                            <span className="task_desc">{task.description}</span>
+                            <div className="task_name"> {task.name}</div>
+                            <div className="task_desc">Description : {task.description} </div>
                             </div>
                             </Link>
-
-                            <Button
+                            </td>
+                            <td>
+                            <input type="checkbox"
+                                defaultChecked={false}
+                                checked={task.completed ?? ""}
+                                onClick={() => HandleUpdate(task)}
+                                className="check-task"
+                            />
+                            </td>
+                                <td>
+                            <button
                                 onClick={() =>HandleDelete(task.name)}
-                                color="secondary"
+                                className="btn-delete"
                             >
                                 delete
-                            </Button>
-                        </Paper>
+                            </button>
+                            </td>
+                        </tr>
                     ))}
-                </div>
-            </Paper>
+                </table>
+            </div>
+            <div className="details-todo">
+            <RouteTask data={tasks}/>
+            </div>
             </div>
         );
     }
