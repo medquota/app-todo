@@ -9,23 +9,18 @@ services:
       - mern-app
   api-server:
     image: api-server
+    restart: always
+    build: .
+    environement: 
+          - DB_HOST=json-server
     ports:
       - "4000:4000"
-    networks:
-      - mern-app
-    depends_on:
-      - mongo
-  mongo:
-    image: mongo:3.6.19-xenial
+  json-server:
+    container_name: json-server-container
+    image: json-server-image
+    build: ./server
     ports:
-      - "27017:27017"
-    networks:
-      - mern-app
+      - "3001:3001"
     volumes:
-      - mongo-data:/data/db
-networks:
-  mern-app:
-    driver: bridge
-volumes:
-  mongo-data:
-    driver: local
+      - ./server/task.json:/data/task.json
+command: json-server --watch /data/task.json --host 0.0.0.0
