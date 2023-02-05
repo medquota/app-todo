@@ -8,19 +8,19 @@ app.use(cors())
 app.use(express.json())
 
 //get the task data from json file
-const getUserData = () => {
+const getTaskData = () => {
     const jsonData = fs.readFileSync('tasks.json')
     return JSON.parse(jsonData)    
 }
 /* Read - GET method */
 app.get('/task/list', (req, res) => {
-    const tasks = getUserData()
+    const tasks = getTaskData()
     res.send(tasks)
 })
 /* Create - POST method */
 app.post('/task/add', (req, res) => {
     //get the existing task data
-    const existUsers = getUserData()
+    const existTasks = getTaskData()
     
     //get the new task data from post request
     const taskData = req.body
@@ -35,7 +35,7 @@ app.patch('/task/update/:name', (req, res) => {
     //get the update data
     const taskData = req.body
     //get the existing task data
-    const existTasks = getUserData()
+    const existTasks = getTaskData()
 
     //check if the task exist or not       
     const findExist = existTasks.filter( task => task.name !== names )
@@ -48,39 +48,39 @@ app.patch('/task/update/:name', (req, res) => {
     //push the updated data
     updateTask.push(taskData)
     //finally save it
-    saveUserData(updateTask)
+    saveTaskData(updateTask)
     res.send({success: true, msg: 'task data updated successfully'})
 })
 /* Delete - Delete method */
 app.delete('/task/delete/:name', (req, res) => {
     const name = req.params.name
     //get the existing taskdata
-    const existUsers = getUserData()
-    //filter the userdata to remove it
-    const filterUser = existUsers.filter( task => task.name !== name )
-    if ( existUsers.length === filterUser.length ) {
+    const existTasks = getTaskData()
+    //filter the Taskdata to remove it
+    const filterTask = existTasks.filter( task => task.name !== name )
+    if ( existTasks.length === filterTask.length ) {
         return res.status(409).send({error: true, msg: 'task does not exist'})
     }
     //save the filtered data
-    saveUserData(filterUser)
+    saveTaskData(filterTask)
     res.send({success: true, msg: 'task removed successfully'})
     
 })
 /* util functions */
 //read the task data from json file
-const saveUserData = (data) => {
+const saveTaskData = (data) => {
     const stringifyData = JSON.stringify(data)
     fs.writeFileSync('tasks.json', stringifyData)
 }
     //check if the task exist already
-    const findExist = existUsers.find( task => task.name === taskData.name )
+    const findExist = existTasks.find( task => task.name === taskData.name )
     if (findExist) {
         return res.status(409).send({error: true, msg: 'task already exist'})
     }
     //append the task data
-    existUsers.push(taskData)
+    existTasks.push(taskData)
     //save the new task data
-    saveUserData(existUsers);
+    saveTaskData(existTasks);
     res.send({success: true, msg: 'Task data added successfully'})
 })
 /* util functions ends */
