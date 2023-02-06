@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import {useDispatch } from "react-redux";
+import { connect } from "react-redux";
+import { addTodo } from "../../actions/todoAction";
+import { getTodoList } from "../../selectors/selectors";
+
 import {
   addTask,
   getTasks,
@@ -8,16 +13,17 @@ import {
 } from "../services/taskServices";
 import "./Task.scss";
 
-function Task() {
-  const [tasks, setTasks] = useState([]);
+function Task(data) {
+  const todos=data.todos;
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(getTasks());
       const json = await res.json();
-      setTasks(json);
+      dispatch(addTodo(json));
     };
     fetchData();
   }, []);
@@ -25,7 +31,7 @@ function Task() {
   const HandleSubmit = async (e) => {
     e.preventDefault();
     e.target.reset();
-    const maxId = Math.max(...tasks.map((key) => key.id));
+    const maxId = Math.max(...todos.map((key) => key.id));
     const taskData = {
       id: maxId + 1,
       name: name,
@@ -35,21 +41,22 @@ function Task() {
     };
     try {
       await addTask(taskData);
+      dispatch(addTodo([...todos, taskData]));
     } catch (error) {
       console.log(error);
+
     }
-    setTasks((tasks) => [...tasks, taskData]);
   };
 
   const HandleUpdate = async (currentTask) => {
     try {
-      const originalTasks = [...tasks];
+      const originalTasks = [...todos];
       const index = originalTasks.findIndex(
         (task) => task.name === currentTask.name
       );
       originalTasks[index] = { ...originalTasks[index] };
       originalTasks[index].completed = !originalTasks[index].completed;
-      setTasks(originalTasks);
+      dispatch(addTodo(originalTasks));
       await updateTask(currentTask.name, {
         id: currentTask.id,
         name: currentTask.name,
@@ -64,15 +71,20 @@ function Task() {
 
   const HandleDelete = async (currentTask) => {
     try {
-      const tasksData = tasks.filter((task) => task.name !== currentTask);
-      setTasks(tasksData);
+      const tasksData = todos.filter((task) => task.name !== currentTask);
+      dispatch(addTodo(tasksData));
       await deleteTask(currentTask);
     } catch (error) {
       console.log(error);
     }
   };
-  const sortedData = [...tasks].sort((a, b) => b.id - a.id);
-  const sortdata = sortedData.sort((a, b) => a.completed - b.completed);
+  let sortCompleted=[];
+  if(todos.length){
+    const sortData =todos.sort((a, b) => b.id - a.id);
+    sortCompleted = sortData.sort((a, b) => a.completed - b.completed);
+
+  }
+
   return (
     <div className="container app-todo">
       <div className="heading">TO-DO</div>
@@ -102,8 +114,8 @@ function Task() {
           </tr>
         </thead>
         <tbody>
-          {sortdata.length &&
-            sortdata.map((task) => (
+          {sortCompleted.length &&
+            sortCompleted.map((task) => (
               <tr key={task.id} className="task_container">
                 <td>
                   <Link to={"/" + task.id}>
@@ -139,5 +151,9 @@ function Task() {
     </div>
   );
 }
+const mapStateToProps = state => {
+    const todos = getTodoList(state);
+    return {todos} ;
+  };
+export default connect(mapStateToProps)(Task);
 
-export default Task;

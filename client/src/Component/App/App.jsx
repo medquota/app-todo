@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Provider } from "react-redux";
+import store from "../../store";
 import RouteTask from "../RouteTask/RouteTask";
 import {
   getTasks,
@@ -18,9 +20,11 @@ function App() {
   }, []);
 
   return (
+    <Provider store={store}>
     <div className="App">
       <RouteTask data={tasks} />
     </div>
+    </Provider>
   );
 }
 
